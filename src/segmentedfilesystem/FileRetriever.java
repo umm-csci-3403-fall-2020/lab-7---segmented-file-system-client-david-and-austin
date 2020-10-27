@@ -1,10 +1,15 @@
 package segmentedfilesystem;
 
-public class FileRetriever {
+import java.net.DatagramPacket;
+import java.util.Stack;
 
+public class FileRetriever {
+	Stack<DataPacket> data = new Stack<>();
+	int port;
+	String server;
 	public FileRetriever(String server, int port) {
-        // Save the server and port for use in `downloadFiles()`
-        //...
+        this.port = port;
+		this.server = server;
 	}
 
 	public void downloadFiles() {
@@ -20,6 +25,7 @@ public class FileRetriever {
         // PacketManager.allPacketsReceived() that you could
         // call for that, but there are a bunch of possible
         // ways.
+
 	}
 
 }

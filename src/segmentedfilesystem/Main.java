@@ -20,6 +20,7 @@ public class Main {
 
         FileRetriever fileRetriever = new FileRetriever(server, port);
         fileRetriever.downloadFiles();
+        PacketMan PacketMan = new PacketMan();
     }
 
 }
