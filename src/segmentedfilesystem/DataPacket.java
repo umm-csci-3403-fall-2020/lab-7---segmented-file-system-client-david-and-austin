@@ -1,17 +1,20 @@
 package segmentedfilesystem;
 
 import java.net.DatagramPacket;
+import java.util.Arrays;
 
 public class DataPacket {
-    int status;
-    int data;
-    int id;
-    int packetNumber;
+    byte status;
+    byte[] data;
+    byte id;
+    byte[] packetNumber;
 
     public DataPacket(DatagramPacket rawBytes){
-        byte[] temp = new byte[rawBytes.getLength()];
-        temp = rawBytes.getData();
-        temp[0] = Byte.
+        status = rawBytes.getData()[0];
+        id = rawBytes.getData()[1];
+        packetNumber[0] = rawBytes.getData()[2];
+        packetNumber[1] = rawBytes.getData()[3];
+        data = Arrays.copyOfRange(rawBytes.getData(),4,rawBytes.getLength());
     }
 
     //TODO: checks to see if packet is last one being sent
