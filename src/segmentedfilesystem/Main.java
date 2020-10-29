@@ -19,8 +19,9 @@ public class Main {
         }
 
         FileRetriever fileRetriever = new FileRetriever(server, port);
+        RecievedFile[] files= new RecievedFile[3];
         fileRetriever.downloadFiles();
-        PacketMan PacketMan = new PacketMan();
+
     }
 
 }

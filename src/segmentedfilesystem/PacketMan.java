@@ -13,13 +13,13 @@ public class PacketMan {
         return false;
     }
 
-    //Checks if a packet is a header packet
-    public boolean isHPacket(DatagramPacket packet) {
+    //Checks packet type. if header, return 0, if data, return 1.
+    public int packetType(DatagramPacket packet) {
         int n = packet.getData()[0];
         if  (n%2 == 0) {
-            return true;
+            return 0;
         }else{
-            return false;
+            return 1;
         }
     }
 }

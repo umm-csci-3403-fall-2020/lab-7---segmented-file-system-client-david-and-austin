@@ -7,6 +7,7 @@ public class FileRetriever {
 	Stack<DataPacket> data = new Stack<>();
 	int port;
 	String server;
+
 	public FileRetriever(String server, int port) {
         this.port = port;
 		this.server = server;
