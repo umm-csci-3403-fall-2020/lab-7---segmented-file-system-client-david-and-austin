@@ -17,11 +17,6 @@ public class DataPacket {
         data = Arrays.copyOfRange(rawBytes.getData(),4,rawBytes.getLength());
     }
 
-    //TODO: checks to see if packet is last one being sent
-    public boolean isLastPacket(){
-        return false;
-    }
-
     //TODO: Not 100% how this should work, but I'm imagining it just returns the byte that the packet should be holding
     public int getData{
         return -1;
