@@ -12,16 +12,17 @@ public class RecievedFile {
     HashMap<byte[],DataPacket> datapackets = new HashMap<>();
 
     public RecievedFile(){
-        data = dp;
-        header = hp;
+      
     }
 
     public void addDP(DataPacket dpToAdd){
         datapackets.put(dpToAdd.packetNumber, dpToAdd);
         if (lastPacket(dpToAdd)){
-            numPackets = dpToAdd.packetNumber + 1;
-            lastPacket = addedPacket;
+            numPackets = datapackets.size();
           }
+        if(allPacketsRecieved()){
+            //Do the fun stuff here
+        }
     }
 
     public boolean allPacketsRecieved(){
