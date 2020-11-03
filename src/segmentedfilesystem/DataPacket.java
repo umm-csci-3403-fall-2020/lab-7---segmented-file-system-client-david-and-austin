@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 public class DataPacket extends Packet{
     byte data;
-    byte id;
     byte[] packetNumber;
 
     public DataPacket(DatagramPacket rawBytes){
