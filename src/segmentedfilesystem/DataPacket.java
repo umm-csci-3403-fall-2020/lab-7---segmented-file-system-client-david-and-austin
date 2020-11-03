@@ -3,9 +3,8 @@ package segmentedfilesystem;
 import java.net.DatagramPacket;
 import java.util.Arrays;
 
-public class DataPacket {
-    byte status;
-    byte[] data;
+public class DataPacket extends Packet{
+    byte data;
     byte id;
     byte[] packetNumber;
 
