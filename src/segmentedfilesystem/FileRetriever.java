@@ -45,7 +45,10 @@ public class FileRetriever {
 			}else{
 				//it's a data packet
 			}
-			if()
+			if(file1.allPacketsRecieved() && file2.allPacketsRecieved() && file3.allPacketsRecieved()){
+				allFilesDownloaded = true;
+				System.out.println("All packets recieved.");
+			}
 		}
 
 	}

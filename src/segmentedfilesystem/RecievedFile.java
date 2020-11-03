@@ -11,7 +11,7 @@ public class RecievedFile {
 
     HashMap<byte[],DataPacket> datapackets = new HashMap<>();
 
-    public RecievedFile(DataPacket dp, HeaderPacket hp){
+    public RecievedFile(){
         data = dp;
         header = hp;
     }
@@ -24,7 +24,7 @@ public class RecievedFile {
           }
     }
 
-    public boolean allPacketsRecievded(){
+    public boolean allPacketsRecieved(){
         if(numPackets == null){
             return false;
         }
