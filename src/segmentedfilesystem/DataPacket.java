@@ -16,7 +16,7 @@ public class DataPacket extends Packet{
     }
 
     //TODO: Not 100% how this should work, but I'm imagining it just returns the byte that the packet should be holding
-    public int getData{
+    public int getData(){
         return -1;
     }
 
