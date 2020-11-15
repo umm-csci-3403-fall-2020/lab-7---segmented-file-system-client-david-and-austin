@@ -30,25 +30,40 @@ public class FileRetriever {
         // PacketManager.allPacketsReceived() that you could
         // call for that, but there are a bunch of possible
         // ways.
-		boolean allFilesDownloaded = false;
+		boolean allPacketsReceived = false;
 		InetAddress address = InetAddress.getByName(server);
+
 		RecievedFile file1 = new RecievedFile();
 		RecievedFile file2 = new RecievedFile();
 		RecievedFile file3 = new RecievedFile();
-		while(allFilesDownloaded == false){
+		PacketMan packetMan = new PacketMan();
+		byte[] idList = new byte[3];
+
+
+		while(allPacketsReceived == false){
 			byte[] buf = new byte[1028];
 			DatagramPacket freshPacket = new DatagramPacket(buf, buf.length);
 			socket.receive(freshPacket);
 
+			//checking which file to pass this to
+			for(byte id:idList){
+				if(Byte.compare(id,freshPacket.getData()[])){
+
+				}
+			}
+
 			if(freshPacket.getData()[0] % 2 == 0){
 				//it's a headerpacket
+
 			}else{
 				//it's a data packet
 			}
+
 			if(file1.allPacketsRecieved() && file2.allPacketsRecieved() && file3.allPacketsRecieved()){
-				allFilesDownloaded = true;
+				allPacketsReceived = true;
 				System.out.println("All packets recieved.");
 			}
+
 		}
 
 	}
