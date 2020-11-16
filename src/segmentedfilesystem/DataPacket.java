@@ -10,11 +10,11 @@ public class DataPacket extends Packet{
     byte status;
     int dataLength;
 
-    public DataPacket(byte statusByte, byte fileID, byte [] packetBuffer){
-        this.id = fileID;
-        status= statusByte;
+    public DataPacket(byte [] packetBuffer){
+        this.id = packetBuffer[1];
+        status= packetBuffer[0];
         packetNumber = getPacketNumber(packetBuffer);
-        data = packetBuffer;
+        data = Arrays.copyOfRange(packetBuffer,3,(packetBuffer.length-1));
         dataLength = packetBuffer.length;
     }
 

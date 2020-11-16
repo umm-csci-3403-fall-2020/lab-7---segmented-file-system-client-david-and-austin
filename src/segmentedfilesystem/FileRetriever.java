@@ -44,19 +44,18 @@ public class FileRetriever {
 			byte[] buf = new byte[1028];
 			DatagramPacket freshPacket = new DatagramPacket(buf, buf.length);
 			socket.receive(freshPacket);
-
+			byte[] unpackedData = freshPacket.getData();
 			//checking which file to pass this to
 			for(byte id:idList){
-				if(Byte.compare(id,freshPacket.getData()[])){
-
+				if(Byte.compare(id,unpackedData[1]) == 0){
+					if(file1.fileID == id){
+						packetMan.buildPacket(unpackedData,file1);
+					}else if(file2.fileID == id){
+						packetMan.buildPacket(unpackedData, file2);
+					}else if(file3.fileID == id){
+						packetMan.buildPacket(unpackedData,file3);
+					}
 				}
-			}
-
-			if(freshPacket.getData()[0] % 2 == 0){
-				//it's a headerpacket
-
-			}else{
-				//it's a data packet
 			}
 
 			if(file1.allPacketsRecieved() && file2.allPacketsRecieved() && file3.allPacketsRecieved()){

@@ -22,4 +22,16 @@ public class PacketMan {
             return 1;
         }
     }
+
+    public void buildPacket(byte[] rawBytes, RecievedFile destinationFile){
+        if(rawBytes[0] % 2 == 0){
+            //it's a headerpacket
+            HeaderPacket newHPacket = new HeaderPacket(rawBytes);
+            destinationFile.addHP(newHPacket);
+        }else{
+            //it's a data packet
+            DataPacket newDPacket = new DataPacket(rawBytes);
+            destinationFile.addDP(newDPacket);
+        }
+    }
 }

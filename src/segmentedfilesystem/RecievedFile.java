@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class RecievedFile {
+    Byte fileID;
     DataPacket data;
     HeaderPacket header;
     Integer numPackets;
