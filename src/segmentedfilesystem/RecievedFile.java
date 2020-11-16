@@ -18,21 +18,15 @@ public class RecievedFile {
     }
     public void writeToFile(){
         System.out.println("Writing file " + fileName);
-        ArrayList<Byte> outputBuffer = new ArrayList<>();
-        ArrayList<Integer> keys = new ArrayList<>();
-        for(int i = 0; i < numPackets; i++){
-          keys.add(i);
-        }
-        for(int i = 0; i < numPackets; i++){
-          outputBuffer.addAll(datapackets.get(keys.get(i)).getData());
-        }
-        byte[] byteArr = new byte[outputBuffer.size()];
+        ArrayList<Integer> keys = makeKeys(numPackets);
+        ArrayList<Byte> outputBuffer = makeOutputBuffer(numPackets, keys);
+        byte[] bytes = new byte[outputBuffer.size()];
         for (int i = 0; i <outputBuffer.size() ; i++) {
-          byteArr[i]=(byte) outputBuffer.get(i);
+          bytes[i]=(byte) outputBuffer.get(i);
         }
         try {
           FileOutputStream file = new FileOutputStream(fileName);
-          file.write(byteArr);
+          file.write(bytes);
         } catch (IOException e){
           System.err.println("Error attempting to write file " + fileName);
           System.err.println("COMPUTER GOES BRRRRRRRRRRR WITH THIS ERROR");
@@ -40,7 +34,21 @@ public class RecievedFile {
         }
     
       }
-    
+      private static ArrayList<Integer> makeKeys(int numPackets){
+        ArrayList<Integer> keys = new ArrayList<>();
+        for(int i = 0; i < numPackets; i++){
+            keys.add(i);
+          }
+        return keys;    
+      }
+      private ArrayList<Byte> makeOutputBuffer(int numPackets,ArrayList<Integer> keys){
+        ArrayList<Byte> outputBuffer = new ArrayList<>();
+
+        for(int i = 0; i < numPackets; i++){
+            outputBuffer.addAll(datapackets.get(keys.get(i)).getData());
+          }
+          return outputBuffer;
+      }
 
     public void addDP(DataPacket dpToAdd){
         datapackets.put(dpToAdd.packetNumber, dpToAdd);
@@ -69,7 +77,5 @@ public class RecievedFile {
     public static boolean lastPacket(Packet packet){
         return packet.status % 4==3;
     }
-
-
 
 }
