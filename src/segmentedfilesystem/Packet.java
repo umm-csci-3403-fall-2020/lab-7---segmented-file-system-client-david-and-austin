@@ -1,6 +1,5 @@
 package segmentedfilesystem;
 
-import java.nio.Buffer;
 import java.util.Arrays;
 
 abstract class Packet {
