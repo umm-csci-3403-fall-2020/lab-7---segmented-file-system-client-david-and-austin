@@ -18,9 +18,9 @@ public class Main {
             port = Integer.parseInt(args[1]);
         }
 
-        FileRetriever fileRetriever = new FileRetriever(server, port);
+       // FileRetriever fileRetriever = new FileRetriever(server, port);
         RecievedFile[] files= new RecievedFile[3];
-        fileRetriever.downloadFiles();
+        //fileRetriever.downloadFiles();
 
     }
 

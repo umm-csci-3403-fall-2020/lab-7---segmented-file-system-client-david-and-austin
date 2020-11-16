@@ -2,28 +2,35 @@ package segmentedfilesystem;
 
 import java.net.DatagramPacket;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class DataPacket extends Packet{
     byte[] data;
     int packetNumber;
+    byte status;
+    int dataLength;
 
-    public DataPacket(DatagramPacket recievedPacket){
-        byte[] rawBytes = recievedPacket.getData();
-        status = rawBytes[0];
-        id = rawBytes[1];
-        packetNumber = getPacketNumber(rawBytes);
-        data = Arrays.copyOfRange(recievedPacket.getData(),4,recievedPacket.getLength());
+    public DataPacket(byte statusByte, byte fileID, byte [] packetBuffer){
+        this.id = fileID;
+        status= statusByte;
+        packetNumber = getPacketNumber(packetBuffer);
+        data = packetBuffer;
+        dataLength = packetBuffer.length;
     }
 
     //TODO: Not 100% how this should work, but I'm imagining it just returns the byte that the packet should be holding
-    public int getData(){
-        return -1;
+    public ArrayList<Byte> getData(){
+        ArrayList<Byte> outputBytes = new ArrayList<>();
+        for(int i =0; i< dataLength;i++){
+            outputBytes.add(data[i]);
+        }
+        return outputBytes;
     }
 
     public int getPacketNumber(byte[] bytes) {
         int number;
-        int primaryByte = bytes[2];
-        int secondaryByte = bytes[3];
+        int primaryByte = bytes[2] & 0xff;
+        int secondaryByte = bytes[3] & 0xff;
 
         if (primaryByte < 0) {
             primaryByte += 256;
