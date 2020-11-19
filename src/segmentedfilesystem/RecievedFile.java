@@ -24,6 +24,7 @@ public class RecievedFile {
         byte[] bytes = new byte[outputBuffer.size()];
         for (int i = 0; i <outputBuffer.size() ; i++) {
           bytes[i]=(byte) outputBuffer.get(i);
+          percentCompleted(i);
         }
         try {
           FileOutputStream file = new FileOutputStream(fileName);
@@ -75,8 +76,11 @@ public class RecievedFile {
         return numPackets == datapackets.size() && header != null;
     }
 
-    public static boolean lastPacket(Packet packet){
+    public boolean lastPacket(Packet packet){
         return packet.status % 4==3;
     }
-
+    public void percentCompleted(int i){
+      double interation = i*1.0;
+      System.out.println("PERCENT COMPLETED: "+ interation/numPackets + "%");
+    }
 }

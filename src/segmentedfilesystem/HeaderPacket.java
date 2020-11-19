@@ -6,10 +6,10 @@ import java.util.Arrays;
 public class HeaderPacket extends Packet{
     String filename;
 
-    public HeaderPacket(byte[] rawBytes) {
-        status = rawBytes[0];
-        id= rawBytes[1];
-        String filename = new String(rawBytes);
+    public HeaderPacket(byte[] packetBytes) {
+        status = packetBytes[0];
+        id= packetBytes[1];
+        String filename = new String(packetBytes);
         this.filename = filename;
     }
 
