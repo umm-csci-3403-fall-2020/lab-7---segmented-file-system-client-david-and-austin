@@ -18,7 +18,6 @@ public class DataPacket extends Packet{
         dataLength = packetBuffer.length;
     }
 
-    //TODO: Not 100% how this should work, but I'm imagining it just returns the byte that the packet should be holding
     public ArrayList<Byte> getData(){
         ArrayList<Byte> outputBytes = new ArrayList<>();
         for(int i =0; i< dataLength;i++){
