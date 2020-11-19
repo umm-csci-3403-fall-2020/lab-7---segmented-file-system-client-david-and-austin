@@ -74,7 +74,7 @@ public class RecievedFile {
         if(numPackets == null){
             return false;
         }
-        return numPackets == datapackets.size() && header != null;
+        return numPackets.equals(datapackets.size()) && header != null;
     }
 
     public boolean lastPacket(Packet packet){
