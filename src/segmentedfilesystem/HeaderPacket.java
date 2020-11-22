@@ -16,7 +16,6 @@ public class HeaderPacket extends Packet{
         return filename;
     }
     public void addToFile(RecievedFile rFile){
-        System.out.println("CALLED HP");
         rFile.addHP(this);
     }
 }
