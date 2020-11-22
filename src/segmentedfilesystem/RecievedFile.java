@@ -75,7 +75,6 @@ public class RecievedFile {
         if(numPackets == null){
             return false;
         }
-        System.out.println(fileName + "DB size " +datapackets.size() +" NP " + numPackets);
         return numPackets.equals(datapackets.size()) && header != null;
     }
 
