@@ -9,5 +9,6 @@ abstract class Packet {
     public void getFileID(){
 
     }
+    public abstract void addToFile(RecievedFile rFile);
   
 }

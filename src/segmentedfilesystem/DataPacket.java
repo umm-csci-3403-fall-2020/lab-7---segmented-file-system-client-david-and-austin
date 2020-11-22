@@ -7,15 +7,14 @@ import java.util.ArrayList;
 public class DataPacket extends Packet{
     byte[] data;
     int packetNumber;
-    byte status;
     int dataLength;
+    boolean isLastPacket;
 
-    public DataPacket(byte [] packetBuffer){
-        this.id = packetBuffer[1];
-        status= packetBuffer[0];
-        packetNumber = getPacketNumber(packetBuffer);
-        data = Arrays.copyOfRange(packetBuffer,3,(packetBuffer.length-1));
-        dataLength = packetBuffer.length;
+    public DataPacket(byte [] packetBuffer,byte statusByte, int packetNum){
+        this.packetNumber = packetNum;
+        this.data = packetBuffer;
+        this.isLastPacket = statusByte % 4 == 3;
+        this.dataLength = packetBuffer.length;
     }
 
     public ArrayList<Byte> getData(){
@@ -27,7 +26,7 @@ public class DataPacket extends Packet{
     }
 
     public int getPacketNumber(byte[] bytes) {
-        int number;
+       /* int number;
         int primaryByte = bytes[2] & 0xff;
         int secondaryByte = bytes[3] & 0xff;
 
@@ -37,8 +36,12 @@ public class DataPacket extends Packet{
         if (secondaryByte < 0) {
             secondaryByte += 256;
         }
-        number = (256 * primaryByte) + secondaryByte;
+        number = (256 * primaryByte) + secondaryByte;*/
+        int packetNum = (bytes[2] & 0xFF) * 256 + (bytes[3] & 0xFF);
 
-        return number;
+        return packetNum;
+    }
+    public void addToFile(RecievedFile rFile){
+        rFile.addDP(this);
     }
 }
