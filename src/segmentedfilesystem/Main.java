@@ -1,5 +1,4 @@
 package segmentedfilesystem;
-
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -28,9 +27,6 @@ public class Main {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-
-    
-
         try {
             fileRetriever.downloadFiles();
         } catch (IOException e) {
