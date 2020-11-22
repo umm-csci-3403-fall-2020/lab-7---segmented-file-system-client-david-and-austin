@@ -1,23 +1,8 @@
 package segmentedfilesystem;
 
-import java.net.DatagramPacket;
 import java.util.Arrays;
 
 public class PacketMan {
-    public PacketMan(){
-
-    }
-
-    //Checks packet type. if header, return 0, if data, return 1.
-    public int packetType(DatagramPacket packet) {
-        int n = packet.getData()[0];
-        if  (n%2 == 0) {
-            return 0;
-        }else{
-            return 1;
-        }
-    }
-
     public Packet buildPacket(byte[] rawBytes){
         Packet packet;
         byte fileID = rawBytes[1];
@@ -32,7 +17,7 @@ public class PacketMan {
             //it's a data packet
             //System.out.println("It's a data packet!");
             byte[] buffer = Arrays.copyOfRange(rawBytes, 4, rawBytes.length);
-            int packetNum = (rawBytes[2] & 0xFF) * 256 + (rawBytes[3] & 0xFF);
+            int packetNum = makePacketNumber(rawBytes);
 
             packet = new DataPacket(buffer,statusByte,packetNum);
         //    destinationFile.addDP(newDPacket);
@@ -40,6 +25,21 @@ public class PacketMan {
         packet.setFileID(fileID); 
 
         return packet;
+    }
+
+    public int makePacketNumber(byte[] bytes) {
+        int number;
+        int primaryByte = bytes[2] & 0xff;
+        int secondaryByte = bytes[3] & 0xff;
+
+        if (primaryByte < 0) {
+            primaryByte += 256;
+        }
+        if (secondaryByte < 0) {
+            secondaryByte += 256;
+        }
+        number = (256 * primaryByte) + secondaryByte;
+        return number;
     }
    
 

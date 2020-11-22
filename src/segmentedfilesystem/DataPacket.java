@@ -3,10 +3,10 @@ package segmentedfilesystem;
 import java.util.ArrayList;
 
 public class DataPacket extends Packet{
-    byte[] data;
-    int packetNumber;
-    int dataLength;
-    boolean lastPacket;
+    private byte[] data;
+    private int packetNumber;
+    private int dataLength;
+    private  boolean lastPacket;
 
     public DataPacket(byte [] packetBuffer,byte statusByte, int packetNum){
         this.packetNumber = packetNum;
@@ -23,20 +23,9 @@ public class DataPacket extends Packet{
         return outputBytes;
     }
 
-    public int getPacketNumber(byte[] bytes) {
-        int number;
-        int primaryByte = bytes[2] & 0xff;
-        int secondaryByte = bytes[3] & 0xff;
-
-        if (primaryByte < 0) {
-            primaryByte += 256;
-        }
-        if (secondaryByte < 0) {
-            secondaryByte += 256;
-        }
-        number = (256 * primaryByte) + secondaryByte;
-        return number;
-    }
+   public int getPacketNumber(){
+       return packetNumber;
+   }
     public void addToFile(RecievedFile rFile){
         rFile.addDP(this);
     }

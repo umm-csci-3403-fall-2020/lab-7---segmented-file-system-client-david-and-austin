@@ -52,7 +52,7 @@ public class FileRetriever {
 	private void addPacketToCorrectFile(Packet packet, Integer key, RecievedFile fileToAdd) {
 		if(rfiles.containsKey(key)){
 			packet.addToFile(fileToAdd);
-		    if (fileToAdd.allPacketsRecieved()){
+		    if (fileToAdd.allPacketsForFile()){
 				System.out.println("FILE COMPLETED");
 		        filesCompleted++;
 		        rfiles.remove(key);
