@@ -3,6 +3,8 @@ package segmentedfilesystem;
 import javax.imageio.IIOException;
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class FileRetriever {
@@ -10,14 +12,23 @@ public class FileRetriever {
 	int port;
 	String server;
 	DatagramSocket socket;
+	HashMap<Integer,RecievedFile> rfiles = new HashMap<>();
+	int filesCompleted;
 
 	public FileRetriever(String server, int port) throws SocketException{
         this.port = port;
 		this.server = server;
-		socket = new DatagramSocket(port);
+		socket = new DatagramSocket();
+		filesCompleted = 0;
+	}
+	private void connectToServer(DatagramSocket sock) throws IOException{
+		byte[] buf = new byte[1028];
+		InetAddress address = InetAddress.getByName(server);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length,address,port);
+		sock.send(packet);
 	}
 
-	public void downloadFiles(RecievedFile[] files) throws UnknownHostException, IOException {
+	public void downloadFiles() throws UnknownHostException, IOException {
         // Do all the heavy lifting here.
         // This should
         //   * Connect to the server
@@ -31,17 +42,32 @@ public class FileRetriever {
         // call for that, but there are a bunch of possible
         // ways.
 		boolean allPacketsReceived = false;
-		InetAddress address = InetAddress.getByName(server);
+		connectToServer(socket);
 		PacketMan packetMan = new PacketMan();
-		byte[] idList = new byte[3];
-		System.out.println("This is what's in idList: " + idList[0] );
-		byte[] buf = new byte[1028];
-		System.out.println("Requesting packets...");
-		DatagramPacket freshPacket = new DatagramPacket(buf, buf.length,address,port);
-		socket.send(freshPacket);
-
 		int timer = 1;
-		while(allPacketsReceived == false){
+		while(filesCompleted < 3){
+
+			byte[] buffer = new byte[1028];
+			DatagramPacket recieved = new DatagramPacket(buffer, buffer.length);
+			socket.receive(recieved);
+			byte[] newBuffer = Arrays.copyOfRange(recieved.getData(),0, recieved.getLength());
+			Packet packet = packetMan.buildPacket(newBuffer);
+			Integer key = (int) packet.id;
+			if(rfiles.containsKey((int) packet.id)){
+				packet.addToFile(rfiles.get((int) packet.id));
+				
+                if (rfiles.get((int) packet.id).allPacketsRecieved()){
+					System.out.println("FILE COMPLETED");
+                    filesCompleted++;
+                    rfiles.remove((int) packet.id);
+				}
+			}else {
+			System.out.println("ADDING NEW FILE");
+			rfiles.put((int) packet.id,new RecievedFile());
+			packet.addToFile(rfiles.get((int) packet.id));
+		}
+
+		/*while(allPacketsReceived == false){
 			//System.out.println("Attempting to retrieve packet...");
 			socket.receive(freshPacket);
 			//System.out.println("Packet retrieved!");
@@ -104,8 +130,7 @@ public class FileRetriever {
 				allPacketsReceived = true;
 				System.out.println("All packets recieved.");
 			}
-
+*/
 		}
 	}
-
 }
