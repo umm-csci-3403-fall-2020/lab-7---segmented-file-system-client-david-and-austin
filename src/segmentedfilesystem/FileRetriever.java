@@ -43,7 +43,7 @@ public class FileRetriever {
 			socket.receive(recieved);
 			byte[] newBuffer = Arrays.copyOfRange(recieved.getData(),0, recieved.getLength());
 			Packet packet = packetMan.buildPacket(newBuffer);
-			Integer key = (int) packet.id;
+			Integer key = (int) packet.getFileID();
 			RecievedFile fileToAdd = rfiles.get(key);
 			addPacketToCorrectFile(packet, key, fileToAdd);
 		}

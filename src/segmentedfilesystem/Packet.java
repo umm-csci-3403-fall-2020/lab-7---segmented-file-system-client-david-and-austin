@@ -3,12 +3,23 @@ package segmentedfilesystem;
 import java.util.Arrays;
 
 abstract class Packet {
-    byte status;
-    int id;
+    private byte status;
+    private int id;
   
-    public void getFileID(){
-
+    public int getFileID(){
+    return id;
     }
+    public void setFileID(int newID){
+        id = newID;
+    }
+    public byte getStatus(){
+        return status;
+    }
+    public void setStatus(byte newStatus){
+        status = newStatus;
+    }
+
     public abstract void addToFile(RecievedFile rFile);
+   
   
 }

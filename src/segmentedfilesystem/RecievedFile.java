@@ -56,7 +56,7 @@ public class RecievedFile {
 
     public void addDP(DataPacket dpToAdd){
         datapackets.put(dpToAdd.packetNumber, dpToAdd);
-        if (lastPacket(dpToAdd)){
+        if (dpToAdd.isLastPacket()){
             numPackets = dpToAdd.packetNumber + 1;
           }
         if(allPacketsRecieved()){
@@ -78,9 +78,6 @@ public class RecievedFile {
         return numPackets.equals(datapackets.size()) && header != null;
     }
 
-    public boolean lastPacket(Packet packet){
-        return packet.status % 4==3;
-    }
     public void setPercentCompleted(int i){
       double interation = i*1.0;
       percentCompleted = "PERCENT COMPLETED: "+ interation/numPackets + "%";

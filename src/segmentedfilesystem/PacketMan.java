@@ -37,8 +37,8 @@ public class PacketMan {
             packet = new DataPacket(buffer,statusByte,packetNum);
         //    destinationFile.addDP(newDPacket);
         }
-        packet.id = rawBytes[1];
-        packet.status= rawBytes[0];
+        packet.setFileID(fileID); 
+        packet.setStatus(statusByte);
 
         return packet;
     }

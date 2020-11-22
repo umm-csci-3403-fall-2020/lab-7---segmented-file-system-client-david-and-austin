@@ -8,12 +8,12 @@ public class DataPacket extends Packet{
     byte[] data;
     int packetNumber;
     int dataLength;
-    boolean isLastPacket;
+    boolean lastPacket;
 
     public DataPacket(byte [] packetBuffer,byte statusByte, int packetNum){
         this.packetNumber = packetNum;
         this.data = packetBuffer;
-        this.isLastPacket = statusByte % 4 == 3;
+        this.lastPacket = (statusByte % 4 == 3);
         this.dataLength = packetBuffer.length;
     }
 
@@ -43,5 +43,8 @@ public class DataPacket extends Packet{
     }
     public void addToFile(RecievedFile rFile){
         rFile.addDP(this);
+    }
+    public boolean isLastPacket(){
+        return lastPacket;
     }
 }
