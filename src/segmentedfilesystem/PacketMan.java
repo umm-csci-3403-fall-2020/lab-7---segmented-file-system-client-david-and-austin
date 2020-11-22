@@ -1,6 +1,7 @@
 package segmentedfilesystem;
 
 import java.net.DatagramPacket;
+import java.util.Arrays;
 
 public class PacketMan {
     public PacketMan(){
@@ -17,17 +18,31 @@ public class PacketMan {
         }
     }
 
-    public void buildPacket(byte[] rawBytes, RecievedFile destinationFile){
-        if(rawBytes[0] % 2 == 0){
+    public Packet buildPacket(byte[] rawBytes){
+        Packet packet;
+        byte fileID = rawBytes[1];
+        byte statusByte = rawBytes[0];
+        if(statusByte % 2 == 0){
             //it's a headerpacket
             //System.out.println("It's a header packet!");
-            HeaderPacket newHPacket = new HeaderPacket(rawBytes);
-            destinationFile.addHP(newHPacket);
+            byte [] filteredBuffer = Arrays.copyOfRange(rawBytes, 2, rawBytes.length);
+            packet = new HeaderPacket(filteredBuffer);
+           // destinationFile.addHP(newHPacket);
         }else{
             //it's a data packet
             //System.out.println("It's a data packet!");
-            DataPacket newDPacket = new DataPacket(rawBytes);
-            destinationFile.addDP(newDPacket);
+            byte[] buffer = Arrays.copyOfRange(rawBytes, 4, rawBytes.length);
+            int packetNum = (rawBytes[2] & 0xFF) * 256 + (rawBytes[3] & 0xFF);
+
+            packet = new DataPacket(buffer,statusByte,packetNum);
+        //    destinationFile.addDP(newDPacket);
         }
+        packet.id = rawBytes[1];
+        packet.status= rawBytes[0];
+
+        return packet;
     }
+   
+
+ 
 }

@@ -1,7 +1,7 @@
 package segmentedfilesystem;
 
 import java.util.HashMap;
-import java.io.File;
+//import java.io.File;
 import java.util.ArrayList;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,6 +28,7 @@ public class RecievedFile {
           setPercentCompleted(i);
         }
         try {
+          System.out.println("VALID NAME: " + fileName);
           FileOutputStream file = new FileOutputStream(fileName);
           file.write(bytes);
         } catch (IOException e){
@@ -56,7 +57,7 @@ public class RecievedFile {
     public void addDP(DataPacket dpToAdd){
         datapackets.put(dpToAdd.packetNumber, dpToAdd);
         if (lastPacket(dpToAdd)){
-            numPackets = dpToAdd.packetNumber;
+            numPackets = dpToAdd.packetNumber + 1;
           }
         if(allPacketsRecieved()){
             writeToFile();
@@ -74,6 +75,7 @@ public class RecievedFile {
         if(numPackets == null){
             return false;
         }
+        System.out.println(fileName + "DB size " +datapackets.size() +" NP " + numPackets);
         return numPackets.equals(datapackets.size()) && header != null;
     }
 
