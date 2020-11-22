@@ -11,7 +11,7 @@ public class FileRetriever {
 	int port;
 	String server;
 	DatagramSocket socket;
-	HashMap<Integer,RecievedFile> rfiles = new HashMap<>();
+	private HashMap<Integer,RecievedFile> rfiles = new HashMap<>();
 	int filesCompleted;
 
 	public FileRetriever(String server, int port) throws SocketException{
@@ -45,20 +45,28 @@ public class FileRetriever {
 			Packet packet = packetMan.buildPacket(newBuffer);
 			Integer key = (int) packet.id;
 			RecievedFile fileToAdd = rfiles.get(key);
-			if(rfiles.containsKey(key)){
-				packet.addToFile(fileToAdd);
-				
-                if (rfiles.get(key).allPacketsRecieved()){
-					System.out.println("FILE COMPLETED");
-                    filesCompleted++;
-                    rfiles.remove(key);
-				}
-			}else {
-			System.out.println("ADDING NEW FILE");
-			rfiles.put(key,new RecievedFile());
-			packet.addToFile(rfiles.get(key));// cannot use fileToAdd since it technically does not exist yet
+			addPacketToCorrectFile(packet, key, fileToAdd);
 		}
-		}
+	}
+
+	private void addPacketToCorrectFile(Packet packet, Integer key, RecievedFile fileToAdd) {
+		if(rfiles.containsKey(key)){
+			packet.addToFile(fileToAdd);
+		    if (fileToAdd.allPacketsRecieved()){
+				System.out.println("FILE COMPLETED");
+		        filesCompleted++;
+		        rfiles.remove(key);
+			}
+		}else {
+			//If a packet contains an unknown file ID it will create a new recievedFile
+		createNewFile(packet, key);
+}
+	}
+
+	private void createNewFile(Packet packet, Integer key) {
+		System.out.println("ADDING NEW FILE");
+		rfiles.put(key,new RecievedFile());
+		packet.addToFile(rfiles.get(key));// cannot use fileToAdd since it technically does not exist yet
 	}
 	private void connectToServer(DatagramSocket sock) throws IOException{
 		byte[] buf = new byte[1028];
@@ -66,4 +74,5 @@ public class FileRetriever {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length,address,port);
 		sock.send(packet);
 	}
+
 }
