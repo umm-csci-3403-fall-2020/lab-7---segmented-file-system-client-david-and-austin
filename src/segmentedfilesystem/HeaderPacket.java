@@ -1,10 +1,9 @@
 package segmentedfilesystem;
 
-import java.net.DatagramPacket;
-import java.util.Arrays;
+
 
 public class HeaderPacket extends Packet{
-    String filename;
+    private String filename;
 
     public HeaderPacket(byte[] packetBytes) {
         String filename = new String(packetBytes);

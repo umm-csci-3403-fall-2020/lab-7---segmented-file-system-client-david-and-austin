@@ -31,12 +31,12 @@ public class RecievedFile {
           System.out.println("VALID NAME: " + fileName);
           FileOutputStream file = new FileOutputStream(fileName);
           file.write(bytes);
+          file.close();
         } catch (IOException e){
           System.err.println("Error attempting to write file " + fileName);
           System.err.println("COMPUTER GOES BRRRRRRRRRRR WITH THIS ERROR");
           System.err.println(e);
         }
-    
       }
       private static ArrayList<Integer> makeKeys(int numPackets){
         ArrayList<Integer> keys = new ArrayList<>();

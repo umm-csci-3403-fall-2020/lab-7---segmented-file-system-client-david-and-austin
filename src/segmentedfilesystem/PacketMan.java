@@ -38,7 +38,6 @@ public class PacketMan {
         //    destinationFile.addDP(newDPacket);
         }
         packet.setFileID(fileID); 
-        packet.setStatus(statusByte);
 
         return packet;
     }

@@ -1,7 +1,5 @@
 package segmentedfilesystem;
 
-import java.net.DatagramPacket;
-import java.util.Arrays;
 import java.util.ArrayList;
 
 public class DataPacket extends Packet{
@@ -26,7 +24,7 @@ public class DataPacket extends Packet{
     }
 
     public int getPacketNumber(byte[] bytes) {
-       /* int number;
+        int number;
         int primaryByte = bytes[2] & 0xff;
         int secondaryByte = bytes[3] & 0xff;
 
@@ -36,10 +34,8 @@ public class DataPacket extends Packet{
         if (secondaryByte < 0) {
             secondaryByte += 256;
         }
-        number = (256 * primaryByte) + secondaryByte;*/
-        int packetNum = (bytes[2] & 0xFF) * 256 + (bytes[3] & 0xFF);
-
-        return packetNum;
+        number = (256 * primaryByte) + secondaryByte;
+        return number;
     }
     public void addToFile(RecievedFile rFile){
         rFile.addDP(this);
