@@ -29,16 +29,10 @@ public class Main {
             e.printStackTrace();
         }
 
-        RecievedFile[] files= new RecievedFile[3];
-        RecievedFile file1 = new RecievedFile();
-        RecievedFile file2 = new RecievedFile();
-        RecievedFile file3 = new RecievedFile();
-        files[0] = file1;
-        files[1] = file2;
-        files[2] = file3;
+    
 
         try {
-            fileRetriever.downloadFiles(files);
+            fileRetriever.downloadFiles();
         } catch (IOException e) {
             e.printStackTrace();
         }
